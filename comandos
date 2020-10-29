@@ -1,0 +1,4 @@
+
+docker system prune -a
+docker build -t nginx-server:latest .
+docker container run -p 80:80 -it --entrypoint /bin/ash --name nginx-test nginx-server
