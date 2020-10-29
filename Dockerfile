@@ -5,23 +5,22 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mrosario <mrosario@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/10/25 19:30:32 by mrosario          #+#    #+#              #
-#    Updated: 2020/10/28 22:15:14 by mrosario         ###   ########.fr        #
+#    Created: 2020/10/29 00:15:19 by miki              #+#    #+#              #
+#    Updated: 2020/10/29 20:33:22 by mrosario         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM alpine
 RUN apk update
 
-#Install openrc
-RUN apk add openrc
-
-#Install nginx
+#Nginx Installation
 RUN apk add nginx
 
-#Configure nginx
-COPY srcs/nginx.conf etc/nginx/
-#RUN mkdir -p /run/nginx
+#Nginx Config
+COPY nginx.conf etc/nginx/nginx.conf
 
-RUN rm -rf /var/cache/apk/* 
-CMD ["etc/init.d/nginx start"]
+
+RUN rm -rf /var/cache/apk/*
+EXPOSE 80 443
+
+CMD ["nginx", "-g", "pid /tmp/nginx.pid;"]
