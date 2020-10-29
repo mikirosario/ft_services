@@ -1,0 +1,9 @@
+docker build -t nginx-server .
+docker run -p 80:80 nginx-server
+
+
+docker pull <image-name>	-> pull docker image
+docker ps 					-> list running docker containers
+docker ps -a				-> list all docker containers
+docker rm <container-name>	-> remove docker container
+docker rmi <image-name>		-> rmeove docker image
