@@ -7,3 +7,8 @@ docker ps 					-> list running docker containers
 docker ps -a				-> list all docker containers
 docker rm <container-name>	-> remove docker container
 docker rmi <image-name>		-> rmeove docker image
+
+Create SSL Cert
+openssl req -x509 -nodes -days 365 -subj "/C=ES/ST=MADRID/O=42, Madrid/CN=MiKey" -addext "subjectAltName=DNS:localhost" -newkey rsa:2048 -keyout /etc/ssl/private/miKey.key -out /etc/ssl/certs/miKey.crt;
+
+https://medium.com/@codingwithmanny/configure-self-signed-ssl-for-nginx-docker-from-a-scratch-7c2bcd5478c6
