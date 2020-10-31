@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miki <miki@student.42.fr>                  +#+  +:+       +#+         #
+#    By: mrosario <mrosario@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/29 00:15:19 by miki              #+#    #+#              #
-#    Updated: 2020/10/31 03:57:02 by miki             ###   ########.fr        #
+#    Updated: 2020/10/31 19:35:08 by mrosario         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ RUN apk update
 RUN apk add nginx
 
 #Nginx Config
-COPY srcs/nginx.conf etc/nginx/nginx.conf
+COPY nginx.conf etc/nginx/nginx.conf
 COPY miKey.crt /etc/ssl/certs/miKey.crt
 COPY miKey.key /etc/ssl/private/miKey.key
 
