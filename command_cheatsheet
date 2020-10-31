@@ -1,5 +1,5 @@
 docker build -t nginx-server .
-docker run --name nginx -d -p 80:80 -p 443:443 nginx-server
+docker run --name nginx -v $(pwd)/mikiweb:/var/lib/nginx/html/:ro -d -p 80:80 -p 443:443 nginx-server
 
 
 docker pull <image-name>		-> pull docker image
@@ -9,6 +9,7 @@ docker rm <container-name>		-> remove docker container
 docker rmi <image-name>			-> rmeove docker image
 docker rm $(docker ps -aq)		-> remove all non-running containers
 docker rm -f $(docker ps -aq)	-> remove all containers
+docker exec -it nginx bin/ash	-> enter running container
 
 Create SSL Cert
 openssl req -x509 -nodes -days 365 -subj "/C=ES/ST=MADRID/O=42, Madrid/CN=MiKey" -addext "subjectAltName=DNS:localhost" -newkey rsa:2048 -keyout /etc/ssl/private/miKey.key -out /etc/ssl/certs/miKey.crt;
