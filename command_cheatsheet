@@ -1,17 +1,51 @@
-docker build -t nginx-server .
-docker run --name nginx -v $(pwd)/mikiweb:/var/lib/nginx/html/:ro -d -p 80:80 -p 443:443 nginx-server
+
+Para desarrollar una web es cómodo mapear un directorio local al contenedor. Para desplegar, mejor
+copiar el directorio de la web al contenedor. :)
+
+BUILD & RUN
+
+docker build -t nginx:latest .																			-> build image from Dockerfile in . (root) directory with name nginx-server.
+docker run --name nginx -d -p 80:80 -p 443:443 nginx:latest												-> run docker container mapping local ports 80 and 443 to container ports
+																										80 and 443, respectively.
+docker run --name nginx -v $(pwd)/mikiweb:/var/lib/nginx/html/:ro -d -p 80:80 -p 443:443 nginx:latest	-> run docker container from image called nginx-server, mounting local
+																										volume ./mikiweb to container volume /var/lib/nginx/html/ (read-only) and
+																										mapping local ports 80 and 443 to container ports 80 and 443, respectively.
+
+TAGGING
+
+docker tag nginx:latest nginx:1.0	-> tag latest as indicated version (latest is version 1.0)
 
 
-docker pull <image-name>		-> pull docker image
-docker ps 						-> list running docker containers
-docker ps -a					-> list all docker containers
-docker rm <container-name>		-> remove docker container
-docker rmi <image-name>			-> rmeove docker image
-docker rm $(docker ps -aq)		-> remove all non-running containers
-docker rm -f $(docker ps -aq)	-> remove all containers
-docker exec -it nginx bin/ash	-> enter running container
+docker pull <image-name>																-> pull docker image
+docker ps 																				-> list running docker containers
+docker ps -a																			-> list all docker containers
+docker rm <container-name>																-> remove docker container
+docker rmi <image-name>																	-> remove docker image
+docker rm $(docker ps -aq)																-> remove all non-running containers
+docker rm -f $(docker ps -aq)															-> remove all containers
+docker exec -it nginx bin/ash															-> enter running container called nginx
+docker run --name copy_test --volumes-from nginx -d -p 8080:80 -p 4443:443 nginx-server -> mount volumes from nginx container to copy_test container (share volumes across containers)
+																						mapping local ports 8080 and 4443 to container ports 80 and 443, respectively.
+
+Apuntar mi docker a docker de minikube
+eval $(./minikube -p minikube docker-env)				-> point my docker environment variable to minikube docker (shell magic) :p
+kubectl exec -it nginx-6bfbfd6449-kphfz -- bin/ash		-> enter running container in cluster from kubectl
+kubectl apply -f ../nginx.yaml							-> aplicar nueva configuración a deployment
+kubectl get pod											-> ver pods
+kubectl get deployment									-> ver deployments
+kubectl get nodes										-> ver nodes
+kubectl get nodes -o wide								-> ver nodes con más información, como INTERNAL-IP y EXTERNAL-IP
+kubectl create -f filepath.yaml							-> crear nuevo deployment
+kubectl delete svc nginx								-> borrar servicio, como por ejemplo nginx
+kubectl delete deployment nginx							-> borrar deployment, como por ejemplo nginx
+kubectl delete configmap config -n metallb-system		-> delete configmap metallb
+c1r8s3% kubectl delete po -n metallb-system --all		-> delete metallb
 
 Create SSL Cert
 openssl req -x509 -nodes -days 365 -subj "/C=ES/ST=MADRID/O=42, Madrid/CN=MiKey" -addext "subjectAltName=DNS:localhost" -newkey rsa:2048 -keyout /etc/ssl/private/miKey.key -out /etc/ssl/certs/miKey.crt;
 
 https://medium.com/@codingwithmanny/configure-self-signed-ssl-for-nginx-docker-from-a-scratch-7c2bcd5478c6
+
+./minikube start --driver=virtualbox
+
+ln -s /sgoinfre/students/mrosario/.brew ~/.brew
