@@ -6,7 +6,7 @@
 #    By: mrosario <mrosario@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/29 00:15:19 by miki              #+#    #+#              #
-#    Updated: 2020/11/09 19:54:36 by mrosario         ###   ########.fr        #
+#    Updated: 2020/11/17 22:09:21 by mrosario         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ COPY nginx.conf etc/nginx/nginx.conf
 COPY miKey.crt /etc/ssl/certs/miKey.crt
 COPY miKey.key /etc/ssl/private/miKey.key
 #Copy Website
-ADD /mikiweb/ /var/lib/nginx/html/
+COPY /mikiweb/ /var/lib/nginx/html/
 
 
 RUN rm -rf /var/cache/apk/*

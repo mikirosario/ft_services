@@ -38,8 +38,11 @@ kubectl get nodes -o wide								-> ver nodes con más información, como INTERN
 kubectl create -f filepath.yaml							-> crear nuevo deployment
 kubectl delete svc nginx								-> borrar servicio, como por ejemplo nginx
 kubectl delete deployment nginx							-> borrar deployment, como por ejemplo nginx
+kubectl apply -f config.yaml
 kubectl delete configmap config -n metallb-system		-> delete configmap metallb
-c1r8s3% kubectl delete po -n metallb-system --all		-> delete metallb
+kubectl delete po -n metallb-system --all				-> delete metallb
+kubectl create deployment nginx2 --image nginx -o yaml	-> create yaml
+kubectl expose deployment/nginx2 --port 3000 --type=LoadBalancer	-> expose deployment
 
 Create SSL Cert
 openssl req -x509 -nodes -days 365 -subj "/C=ES/ST=MADRID/O=42, Madrid/CN=MiKey" -addext "subjectAltName=DNS:localhost" -newkey rsa:2048 -keyout /etc/ssl/private/miKey.key -out /etc/ssl/certs/miKey.crt;
