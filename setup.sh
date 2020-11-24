@@ -36,7 +36,7 @@ function setup_sgoinfre()
 		find /sgoinfre/students -maxdepth 0 &> /dev/null
 		if [ $? != 0 ]
 		then
-			printf $RED"You don't seem to be on the Madrid 42 campus... You don't have our file structure.\nSorry, can't install."
+			printf $RED"You don't seem to have sgoinfre at all...\nSorry, this script is not designed for this. Can't install."
 			exit 1
 		else
 			printf $RED"BAD BUNNY! You don't have a sgoinfre folder.\n"$RESET"Set up a sgoinfre folder for you?\n(/sgoinfre/students/<yourusername>)\n"
@@ -185,12 +185,12 @@ function setup_metallb()
 function build_nginx_container()
 {
 	echo "Building nginx container..."
-	docker build -t nginx:latest ./srcs/nginx
+	docker build -t nginx:latest ./srcs/nginx/
 }
 
 function launch_nginx_service()
 {
-	kubectl apply -f ./srcs/nginx/nginx.conf
+	kubectl apply -f ./srcs/nginx.yaml
 }
 
 # function setup_minikube()
@@ -201,6 +201,12 @@ function launch_nginx_service()
 #	fi	
 #}
 
+hostname | grep 42madrid &> /dev/null
+if [ $? != 0 ]
+then
+	printf $RED"You don't seem to be on the Madrid 42 campus...\nSorry, can't install.\n"
+	exit 1
+fi
 setup_sgoinfre
 setup_docker
 setup_virtualbox
@@ -211,3 +217,4 @@ launch_minikube
 setup_metallb
 build_nginx_container
 launch_nginx_service
+docker system prune

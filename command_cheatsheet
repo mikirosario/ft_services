@@ -10,7 +10,7 @@ docker run --name nginx -d -p 80:80 -p 443:443 nginx:latest												-> run do
 docker run --name nginx -v $(pwd)/mikiweb:/var/lib/nginx/html/:ro -d -p 80:80 -p 443:443 nginx:latest	-> run docker container from image called nginx-server, mounting local
 																										volume ./mikiweb to container volume /var/lib/nginx/html/ (read-only) and
 																										mapping local ports 80 and 443 to container ports 80 and 443, respectively.
-
+docker run -p 21:21 -p 21000-21010:21000-21010 -e USERS="test1|1test" -e ADDRESS="localhost" -it ftps_srv	-> ftps???
 TAGGING
 
 docker tag nginx:latest nginx:1.0	-> tag latest as indicated version (latest is version 1.0)
@@ -28,7 +28,7 @@ docker run --name copy_test --volumes-from nginx -d -p 8080:80 -p 4443:443 nginx
 																						mapping local ports 8080 and 4443 to container ports 80 and 443, respectively.
 
 Apuntar mi docker a docker de minikube
-eval $(./minikube -p minikube docker-env)				-> point my docker environment variable to minikube docker (shell magic) :p
+eval $(minikube -p minikube docker-env)					-> point my docker environment variable to minikube docker (shell magic) :p
 kubectl exec -it nginx-6bfbfd6449-kphfz -- bin/ash		-> enter running container in cluster from kubectl
 kubectl apply -f ../nginx.yaml							-> aplicar nueva configuración a deployment
 kubectl get pod											-> ver pods
@@ -42,7 +42,14 @@ kubectl apply -f config.yaml
 kubectl delete configmap config -n metallb-system		-> delete configmap metallb
 kubectl delete po -n metallb-system --all				-> delete metallb
 kubectl create deployment nginx2 --image nginx -o yaml	-> create yaml
+
+#Expose deployment port
 kubectl expose deployment/nginx2 --port 3000 --type=LoadBalancer	-> expose deployment
+
+#SSH into Nginx
+kubectl get pods
+kubectl exec --stdin --tty nginx-5bc77d6c49-mdc6v -- /bin/ash		-> ssh into nginx
+
 
 Create SSL Cert
 openssl req -x509 -nodes -days 365 -subj "/C=ES/ST=MADRID/O=42, Madrid/CN=MiKey" -addext "subjectAltName=DNS:localhost" -newkey rsa:2048 -keyout /etc/ssl/private/miKey.key -out /etc/ssl/certs/miKey.crt;
