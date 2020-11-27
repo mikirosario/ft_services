@@ -2,7 +2,7 @@
 Para desarrollar una web es cómodo mapear un directorio local al contenedor. Para desplegar, mejor
 copiar el directorio de la web al contenedor. :)
 
-BUILD & RUN
+BUILD & RUN NGINX
 
 docker build -t nginx:latest .																			-> build image from Dockerfile in . (root) directory with name nginx-server.
 docker run --name nginx -d -p 80:80 -p 443:443 nginx:latest												-> run docker container mapping local ports 80 and 443 to container ports
@@ -10,7 +10,12 @@ docker run --name nginx -d -p 80:80 -p 443:443 nginx:latest												-> run do
 docker run --name nginx -v $(pwd)/mikiweb:/var/lib/nginx/html/:ro -d -p 80:80 -p 443:443 nginx:latest	-> run docker container from image called nginx-server, mounting local
 																										volume ./mikiweb to container volume /var/lib/nginx/html/ (read-only) and
 																										mapping local ports 80 and 443 to container ports 80 and 443, respectively.
-docker run -p 21:21 -p 21000-21010:21000-21010 -e USERS="test1|1test" -e ADDRESS="localhost" -it ftps_srv	-> ftps???
+
+															BUILD & RUN FTPS
+docker build -t ftps:latest .
+docker run --name ftps -v $(pwd)/ftps_chroot:/ftps_chroot/ -p 21:21 -p 21000-21010:21000-21010 -e USERS="user" -e ADDRESS="localhost" -it ftps:latest
+
+
 TAGGING
 
 docker tag nginx:latest nginx:1.0	-> tag latest as indicated version (latest is version 1.0)

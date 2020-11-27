@@ -28,6 +28,7 @@ metadata:
   labels:
     app: nginx
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: nginx
@@ -46,3 +47,11 @@ spec:
         ports:
         - containerPort: 80
         - containerPort: 443
+        volumeMounts:
+          - mountPath: "/etc/nginx/ssl/"
+            name: nginx-ssl
+            readOnly: true
+      volumes:
+        - name: nginx-ssl
+          secret:
+            secretName: nginx-ssl

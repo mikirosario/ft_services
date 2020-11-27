@@ -182,14 +182,17 @@ function setup_metallb()
 	kubectl apply -f ./srcs/kubernetes/metallb-config.yaml
 }
 
-function build_nginx_container()
+function build_images()
 {
 	echo "Building nginx container..."
 	docker build -t nginx:latest ./srcs/nginx/
+	echo "Building ftps container..."
+	docker build -t ftps:latest ./srcs/nginx/
 }
 
 function launch_nginx_service()
 {
+	kubectl apply -f ./srcs/kubernetes/ssl_secret.yaml
 	kubectl apply -f ./srcs/nginx.yaml
 }
 
@@ -215,6 +218,6 @@ setup_kubectl
 setup_minikube
 launch_minikube
 setup_metallb
-build_nginx_container
+build_images
 launch_nginx_service
-docker system prune
+yes | docker system prune

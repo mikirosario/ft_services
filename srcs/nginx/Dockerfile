@@ -6,7 +6,7 @@
 #    By: mrosario <mrosario@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/29 00:15:19 by miki              #+#    #+#              #
-#    Updated: 2020/11/24 22:31:25 by mrosario         ###   ########.fr        #
+#    Updated: 2020/11/27 21:55:07 by mrosario         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,10 @@ RUN apk update
 RUN apk add nginx
 
 #Nginx Config
-COPY nginx.conf etc/nginx/nginx.conf
-COPY miKey.crt /etc/ssl/certs/miKey.crt
-COPY miKey.key /etc/ssl/private/miKey.key
+RUN mkdir /etc/nginx/ssl
+COPY nginx.conf /etc/nginx/nginx.conf
+# COPY miKey.crt /etc/ssl/certs/miKey.crt
+# COPY miKey.key /etc/ssl/private/miKey.key
 #Copy Website
 COPY /mikiweb/ /var/lib/nginx/html/
 
