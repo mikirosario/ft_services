@@ -14,7 +14,7 @@ docker run --name nginx -v $(pwd)/mikiweb:/var/lib/nginx/html/:ro -d -p 80:80 -p
 															BUILD & RUN FTPS
 docker build -t ftps:latest .
 docker run --name ftps -v $(pwd)/ftps_chroot:/ftps_chroot/ -p 21:21 -p 21000-21010:21000-21010 -e USERS="user" -e ADDRESS="localhost" -it ftps:latest
-
+curl --ftp-ssl --user name:passwd ftp://ftp.host.com/
 
 TAGGING
 
@@ -48,6 +48,9 @@ kubectl delete configmap config -n metallb-system		-> delete configmap metallb
 kubectl delete po -n metallb-system --all				-> delete metallb
 kubectl create deployment nginx2 --image nginx -o yaml	-> create yaml
 
+LOOK FOR EVENTS; MAINLY PROBLEMS :p
+kubectl get events --all-namespaces  --sort-by='.metadata.creationTimestamp'	-> look for failures
+
 #Expose deployment port
 kubectl expose deployment/nginx2 --port 3000 --type=LoadBalancer	-> expose deployment
 
@@ -64,3 +67,7 @@ https://medium.com/@codingwithmanny/configure-self-signed-ssl-for-nginx-docker-f
 ./minikube start --driver=virtualbox
 
 ln -s /sgoinfre/students/mrosario/.brew ~/.brew
+
+
+
+-fsanitize=address

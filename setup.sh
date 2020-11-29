@@ -187,13 +187,15 @@ function build_images()
 	echo "Building nginx container..."
 	docker build -t nginx:latest ./srcs/nginx/
 	echo "Building ftps container..."
-	docker build -t ftps:latest ./srcs/nginx/
+	docker build -t ftps:latest ./srcs/ftps/
 }
 
 function launch_nginx_service()
 {
 	kubectl apply -f ./srcs/kubernetes/ssl_secret.yaml
+	kubectl apply -f ./srcs/kubernetes/ftps_secret.yaml
 	kubectl apply -f ./srcs/nginx.yaml
+	kubectl apply -f ./srcs/ftps.yaml
 }
 
 # function setup_minikube()

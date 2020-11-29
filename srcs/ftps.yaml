@@ -1,0 +1,120 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ftps
+  labels:
+    app: ftps
+spec:
+  type: LoadBalancer
+  selector:
+    app: ftps
+  ports:
+    - name: ftp-transfer-active
+      protocol: TCP
+      port: 20
+      targetPort: 20
+    - name: ftp-connection
+      protocol: TCP
+      port: 21
+      targetPort: 21
+    - name: ftp-passive-21000
+      protocol: TCP
+      port: 21000
+      targetPort: 21000
+    - name: ftp-passive-21001
+      protocol: TCP
+      port: 21001
+      targetPort: 21001
+    - name: ftp-passive-21002
+      protocol: TCP
+      port: 21002
+      targetPort: 21002
+    - name: ftp-passive-21003
+      protocol: TCP
+      port: 21003
+      targetPort: 21003
+    - name: ftp-passive-21004
+      protocol: TCP
+      port: 21004
+      targetPort: 21004
+    - name: ftp-passive-21005
+      protocol: TCP
+      port: 21005
+      targetPort: 21005
+    - name: ftp-passive-21006
+      protocol: TCP
+      port: 21006
+      targetPort: 21006
+    - name: ftp-passive-21007
+      protocol: TCP
+      port: 21007
+      targetPort: 21007
+    - name: ftp-passive-21008
+      protocol: TCP
+      port: 21008
+      targetPort: 21008
+    - name: ftp-passive-21009
+      protocol: TCP
+      port: 21009
+      targetPort: 21009
+    - name: ftp-passive-21010
+      protocol: TCP
+      port: 21010
+      targetPort: 21010
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps
+  labels:
+    app: ftps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ftps
+  template:
+    metadata:
+      labels:
+        app: ftps
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: ftps
+        image: ftps:latest
+        imagePullPolicy: Never
+        securityContext: #Mejor solo a su volumen??? Hmmm.... :?
+          privileged: true
+        env:
+          - name: FTPS_USER
+            valueFrom:
+              secretKeyRef:
+                name: ftps-auth
+                key: username
+          - name: FTPS_PASS
+            valueFrom:
+              secretKeyRef:
+                name: ftps-auth
+                key: password
+        ports:
+        - containerPort: 20
+        - containerPort: 21
+        - containerPort: 21000
+        - containerPort: 21001
+        - containerPort: 21002
+        - containerPort: 21003
+        - containerPort: 21004
+        - containerPort: 21005
+        - containerPort: 21006
+        - containerPort: 21007
+        - containerPort: 21008
+        - containerPort: 21009
+        - containerPort: 21010
+        volumeMounts:
+          - name: ftps-chroot
+            mountPath: "/ftps_chroot"
+            readOnly: false
+      volumes:
+        - name: ftps-chroot
+          hostPath:
+            path: /Users/mrosario/ft_services/srcs/ftps/ftps_chroot #don't know how to do $USER or (whoami) here. Hmm....
