@@ -19,48 +19,48 @@ spec:
       targetPort: 21
     - name: ftp-passive-21000
       protocol: TCP
-      port: 21000
-      targetPort: 21000
+      port: 30020
+      targetPort: 30020
     - name: ftp-passive-21001
       protocol: TCP
-      port: 21001
-      targetPort: 21001
+      port: 30021
+      targetPort: 30021
     - name: ftp-passive-21002
       protocol: TCP
-      port: 21002
-      targetPort: 21002
+      port: 30022
+      targetPort: 30022
     - name: ftp-passive-21003
       protocol: TCP
-      port: 21003
-      targetPort: 21003
+      port: 30023
+      targetPort: 30023
     - name: ftp-passive-21004
       protocol: TCP
-      port: 21004
-      targetPort: 21004
+      port: 30024
+      targetPort: 30024
     - name: ftp-passive-21005
       protocol: TCP
-      port: 21005
-      targetPort: 21005
+      port: 30025
+      targetPort: 30025
     - name: ftp-passive-21006
       protocol: TCP
-      port: 21006
-      targetPort: 21006
+      port: 30026
+      targetPort: 30026
     - name: ftp-passive-21007
       protocol: TCP
-      port: 21007
-      targetPort: 21007
+      port: 30027
+      targetPort: 30027
     - name: ftp-passive-21008
       protocol: TCP
-      port: 21008
-      targetPort: 21008
+      port: 30028
+      targetPort: 30028
     - name: ftp-passive-21009
       protocol: TCP
-      port: 21009
-      targetPort: 21009
+      port: 30029
+      targetPort: 30029
     - name: ftp-passive-21010
       protocol: TCP
-      port: 21010
-      targetPort: 21010
+      port: 30030
+      targetPort: 30030
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -99,17 +99,17 @@ spec:
         ports:
         - containerPort: 20
         - containerPort: 21
-        - containerPort: 21000
-        - containerPort: 21001
-        - containerPort: 21002
-        - containerPort: 21003
-        - containerPort: 21004
-        - containerPort: 21005
-        - containerPort: 21006
-        - containerPort: 21007
-        - containerPort: 21008
-        - containerPort: 21009
-        - containerPort: 21010
+        - containerPort: 30020
+        - containerPort: 30021
+        - containerPort: 30022
+        - containerPort: 30023
+        - containerPort: 30024
+        - containerPort: 30025
+        - containerPort: 30026
+        - containerPort: 30027
+        - containerPort: 30028
+        - containerPort: 30029
+        - containerPort: 30030
         volumeMounts:
           - name: ftps-chroot
             mountPath: "/ftps_chroot"

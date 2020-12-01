@@ -16,4 +16,4 @@ chmod 700 /ftps_chroot
 
 # -- Start FTP server ---
 printf "FTPS server is starting !\n"
-exec /usr/sbin/vsftpd -opasv_min_port=21000 -opasv_max_port=21010 /etc/vsftpd/vsftpd.conf
+exec /usr/sbin/vsftpd -opasv_min_port=30020 -opasv_max_port=30030 /etc/vsftpd/vsftpd.conf
