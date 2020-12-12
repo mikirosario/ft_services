@@ -1,0 +1,53 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: phpmyadmin
+  labels:
+    app: phpmyadmin
+spec:
+  type: LoadBalancer
+  selector:
+    app: phpmyadmin
+  loadBalancerIP: 192.168.99.203
+  ports:
+    - name: phpmyadmin
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin
+  labels:
+    app: phpmyadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: phpmyadmin
+        image: phpmyadmin:latest
+        imagePullPolicy: Never
+        securityContext: #Mejor solo a su volumen??? Hmmm.... :?
+          privileged: true
+        #env:
+        #  - name: FTPS_USER
+        #    valueFrom:
+        #      secretKeyRef:
+        #        name: ftps-auth
+        #        key: username
+        #  - name: FTPS_PASS
+        #    valueFrom:
+        #      secretKeyRef:
+        #        name: ftps-auth
+        #        key: password
+        ports:
+        - containerPort: 5000

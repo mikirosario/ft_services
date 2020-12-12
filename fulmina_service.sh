@@ -38,7 +38,7 @@ then
 	eval $(minikube -p minikube docker-env)
 	echo "Docker linked to minikube docker daemon"
 fi
-docker rm $1
+yes | docker system prune
 docker rmi $1
 echo "Deleted $1 deployments and service, removed $1 docker containers and images."
 docker build -t $1:latest /Users/mrosario/ft_services/srcs/$1/

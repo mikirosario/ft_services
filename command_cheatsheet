@@ -21,6 +21,16 @@ TAGGING
 docker tag nginx:latest nginx:1.0	-> tag latest as indicated version (latest is version 1.0)
 
 
+
+MYSQL/PHPMYADMIN
+
+domain name??? mysql.default.svc.cluster.local ??
+
+Dicen por ahí: For applications in the same namespace you can actually skip most of this and just use the service name!
+
+Really?? Hmmmmm... Tendré que probarlo! xD
+
+
 docker pull <image-name>																-> pull docker image
 docker ps 																				-> list running docker containers
 docker ps -a																			-> list all docker containers
@@ -47,6 +57,8 @@ kubectl apply -f config.yaml
 kubectl delete configmap config -n metallb-system		-> delete configmap metallb
 kubectl delete po -n metallb-system --all				-> delete metallb
 kubectl create deployment nginx2 --image nginx -o yaml	-> create yaml
+kubectl apply -f pv-volume.yaml							-> create pv
+kubectl get pv task-pv-volume							-> get persistent volume info
 
 LOOK FOR EVENTS; MAINLY PROBLEMS :p
 kubectl get events --all-namespaces  --sort-by='.metadata.creationTimestamp'	-> look for failures

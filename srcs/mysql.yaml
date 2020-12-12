@@ -1,0 +1,60 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  type: ClusterIP
+  selector:
+    app: mysql
+  ports:
+    - name: mysql
+      protocol: TCP
+      port: 3306
+      targetPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: mysql
+        image: mysql:latest
+        imagePullPolicy: Never
+        securityContext: #Mejor solo a su volumen??? Hmmm.... :?
+          privileged: true
+        env:
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql-auth
+                key: username
+          - name: MYSQL_PASS
+            valueFrom:
+              secretKeyRef:
+                name: mysql-auth
+                key: password
+        ports:
+        - containerPort: 3306
+      #  volumeMounts:
+      #  - name: mysql-persistent-storage
+      #    mountPath: "/var/lib/mysql"
+      #    readOnly: false
+      #volumes:
+      #  - name: mysql-persistent-storage
+      #    hostPath:
+      #      path: /Users/mrosario/ft_services/srcs/mysql/database #don't know how to do $USER or (whoami) here. Hmm....        

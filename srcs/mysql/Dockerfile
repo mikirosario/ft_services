@@ -6,20 +6,28 @@
 #    By: mrosario <mrosario@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/29 00:15:19 by miki              #+#    #+#              #
-#    Updated: 2020/12/02 21:20:23 by mrosario         ###   ########.fr        #
+#    Updated: 2020/12/12 20:46:39 by mrosario         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM alpine:3.12.1
+#
+#Update and install openrc and mysql
+#RUN apk update && apk add mariadb=10.4.15-r0 mariadb-client=10.4.15-r0 && rm -rf /var/cache/apk/*
+RUN apk update && apk add openrc mysql mysql-client && rm -rf /var/cache/apk/*
 
-#Update and install vsftpd and openssl
-RUN apk update && apk add vsftpd openssl && rm -rf /var/cache/apk/*
+#Temporary insecure user/pass for testing
+ENV MYSQL_DATABASE wordpress
+ENV DB_USER=user
+ENV DB_PASSWORD=pass
 
-#Copy vsftpd initiation script
-COPY	ftps_init.sh ./ftps_init.sh
+RUN mkdir -p /var/lib/mysql
 
-#Copy vsftpd configuration file
-COPY	ftps.conf /etc/vsftpd/vsftpd.conf
+#VOLUME [ "/var/lib/mysql" ]
 
-EXPOSE	20 21 30020-30030
-CMD . /ftps_init.sh
+COPY mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
+COPY mariadb_init.sh /mariadb_init.sh
+
+EXPOSE 3306
+CMD ash ./mariadb_init.sh && tail -F /dev/null
+#CMD tail -F /dev/null

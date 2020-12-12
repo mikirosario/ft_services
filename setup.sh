@@ -188,28 +188,27 @@ function build_images()
 	docker build -t nginx:latest ./srcs/nginx/
 	echo "Building ftps container..."
 	docker build -t ftps:latest ./srcs/ftps/
+	echo "Building mysql container..."
+	docker build -t mysql:latest ./srcs/mysql/
+	echo "Building mysql container..."
+	docker build -t phpmyadmin:latest ./srcs/phpmyadmin/
 }
 
-function launch_nginx_service()
+function launch_services()
 {
 	kubectl apply -f ./srcs/kubernetes/ssl_secret.yaml
 	kubectl apply -f ./srcs/kubernetes/ftps_secret.yaml
+	kubectl apply -f ./srcs/kubernetes/mysql_secret.yaml
 	kubectl apply -f ./srcs/nginx.yaml
 	kubectl apply -f ./srcs/ftps.yaml
+	kubectl apply -f ./srcs/mysql.yaml
+	kubectl apply -f ./srcs/phpmyadmin.yaml
 }
-
-# function setup_minikube()
-# {
-#	minikube &> /dev/null #Redirect minikube output to /dev/null (throw it away)
-#	if [ $? != 0 ]
-#	then
-#	fi	
-#}
 
 hostname | grep 42madrid &> /dev/null
 if [ $? != 0 ]
 then
-	printf $RED"You don't seem to be on the Madrid 42 campus...\nSorry, can't install.\n"
+	printf $RED"You don't seem to be on the Madrid 42 campus...\nSorry, can't install.\n"$RESET
 	exit 1
 fi
 setup_sgoinfre
@@ -221,5 +220,5 @@ setup_minikube
 launch_minikube
 setup_metallb
 build_images
-launch_nginx_service
+launch_services
 yes | docker system prune
