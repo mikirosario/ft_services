@@ -18,13 +18,17 @@
 
 mkdir -p /run/mysqld
 cp -rp /var/run/mysqld /var/run/mysqld.bak
+chown root:root /var/lib/mysql
 
 mysql_install_db --user=$MYSQL_USER
 tmp=sql_tmp
 
 echo -ne "FLUSH PRIVILEGES;\n
 GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASS' WITH GRANT OPTION;\n
+CREATE DATABASE wordpress;
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY 'pass';
 FLUSH PRIVILEGES;\n" >> $tmp 
+#sustituye wordpress 'pass' por otro secret en pods de mysql y wordpress, configs, etc.
 
 /usr/bin/mysqld --user=$MYSQL_USER --bootstrap --verbose=0 < $tmp
 rm -rf $tmp
