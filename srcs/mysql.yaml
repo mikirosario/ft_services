@@ -62,11 +62,24 @@ spec:
                 key: password
         ports:
         - containerPort: 3306
-#        volumeMounts:
-#        - name: mysql-persistent-storage
-#          mountPath: "/var/lib/mysql"
-#          readOnly: false
-#      volumes:
-#        - name: mysql-persistent-storage
-#          hostPath:
-#            path: /Users/mrosario/ft_services/srcs/mysql/database #don't know how to do $USER or (whoami) here. Hmm....
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: "/var/lib/mysql"
+          readOnly: false
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

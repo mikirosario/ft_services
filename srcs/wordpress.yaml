@@ -7,8 +7,8 @@ metadata:
 spec:
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 5050
+      targetPort: 5050
   selector:
     app: wordpress
   type: LoadBalancer
@@ -35,7 +35,7 @@ spec:
         imagePullPolicy: Never
         name: wordpress
         ports:
-        - containerPort: 80
+        - containerPort: 5050
           name: wordpress
 #        volumeMounts:
 #        - name: wordpress-persistent-storage

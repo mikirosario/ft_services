@@ -24,12 +24,10 @@ docker tag nginx:latest nginx:1.0	-> tag latest as indicated version (latest is 
 
 MYSQL/PHPMYADMIN
 
-domain name??? mysql.default.svc.cluster.local ??
 
-Dicen por ahí: For applications in the same namespace you can actually skip most of this and just use the service name!
 
-Really?? Hmmmmm... Tendré que probarlo! xD
 
+######## DOCKER ########
 
 docker pull <image-name>																-> pull docker image
 docker ps 																				-> list running docker containers
@@ -41,6 +39,7 @@ docker rm -f $(docker ps -aq)															-> remove all containers
 docker exec -it nginx bin/ash															-> enter running container called nginx
 docker run --name copy_test --volumes-from nginx -d -p 8080:80 -p 4443:443 nginx-server -> mount volumes from nginx container to copy_test container (share volumes across containers)
 																						mapping local ports 8080 and 4443 to container ports 80 and 443, respectively.
+######## KUBERNETES (KUBECTL) ########
 
 Apuntar mi docker a docker de minikube
 eval $(minikube -p minikube docker-env)					-> point my docker environment variable to minikube docker (shell magic) :p
@@ -60,6 +59,8 @@ kubectl create deployment nginx2 --image nginx -o yaml	-> create yaml
 kubectl apply -f pv-volume.yaml							-> create pv
 kubectl get pv task-pv-volume							-> get persistent volume info
 kubectl patch pv mysql-pv -p '{"metadata":{"finalizers":null}}' -> forzar borrado de pv *rolleyes*
+
+DNS Services mysql.default.svc.cluster.local
 
 LOOK FOR EVENTS; MAINLY PROBLEMS :p
 kubectl get events --all-namespaces  --sort-by='.metadata.creationTimestamp'	-> look for failures

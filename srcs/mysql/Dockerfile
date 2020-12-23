@@ -6,7 +6,7 @@
 #    By: mrosario <mrosario@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/29 00:15:19 by miki              #+#    #+#              #
-#    Updated: 2020/12/15 20:47:17 by mrosario         ###   ########.fr        #
+#    Updated: 2020/12/23 17:18:15 by mrosario         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ VOLUME [ "/var/lib/mysql" ]
 
 COPY mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 COPY mariadb_init.sh /mariadb_init.sh
+COPY wordpress.sql ./wordpress.sql
+#COPY wordpressdb.sql ./wordpressdb.sql
 
 EXPOSE 3306
 CMD ash ./mariadb_init.sh && tail -F /dev/null
