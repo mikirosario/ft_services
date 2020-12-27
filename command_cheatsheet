@@ -82,6 +82,6 @@ https://medium.com/@codingwithmanny/configure-self-signed-ssl-for-nginx-docker-f
 
 ln -s /sgoinfre/students/mrosario/.brew ~/.brew
 
-
+mysql -u root -p wordpress < wordpress.sql
 
 -fsanitize=address

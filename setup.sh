@@ -190,8 +190,10 @@ function build_images()
 	docker build -t ftps:latest ./srcs/ftps/
 	echo "Building mysql container..."
 	docker build -t mysql:latest ./srcs/mysql/
-	echo "Building mysql container..."
+	echo "Building phpMyAdmin container..."
 	docker build -t phpmyadmin:latest ./srcs/phpmyadmin/
+	echo "Building wordpress container..."
+	docker build -t wordpress:latest ./srcs/wordpress/
 }
 
 function launch_services()
@@ -203,6 +205,7 @@ function launch_services()
 	kubectl apply -f ./srcs/ftps.yaml
 	kubectl apply -f ./srcs/mysql.yaml
 	kubectl apply -f ./srcs/phpmyadmin.yaml
+	kubectl apply -f ./srcs/wordpress.yaml
 }
 
 hostname | grep 42madrid &> /dev/null
