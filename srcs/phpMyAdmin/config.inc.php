@@ -34,7 +34,8 @@ $cfg['Servers'][$i]['connect_type'] = 'tcp';
 $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
 $cfg['Servers'][$i]['extension'] = 'mysqli';
-
+$cfg['AllowArbitraryServer'] = true;
+#$cfg['PmaAbsoluteUri'] = 'https://192.168.99.200/phpmyadmin/';
 
 /**
  * phpMyAdmin configuration storage settings.

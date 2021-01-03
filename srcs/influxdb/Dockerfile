@@ -6,31 +6,18 @@
 #    By: mrosario <mrosario@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/29 00:15:19 by miki              #+#    #+#              #
-#    Updated: 2021/01/02 20:58:12 by mrosario         ###   ########.fr        #
+#    Updated: 2020/12/30 15:11:17 by mrosario         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM alpine:3.12.1
+#ARG IP
 
-#Nginx Installation
-RUN apk update && apk add nginx openssh libc6-compat && rm -rf /var/cache/apk/*
+# Install packages
+RUN echo "http://dl-2.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && apk update && apk add influxdb=1.8.0-r1 telegraf=1.17.0-r0
 
-#Nginx Config
-RUN mkdir /etc/nginx/ssl
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY start_nginx.sh ./start_nginx.sh
+COPY start_influx.sh ./start_influx.sh
+COPY telegraf.conf ./telegraf.conf
 
-#Telegraf Config
-RUN wget https://dl.influxdata.com/telegraf/releases/telegraf-1.17.0_linux_amd64.tar.gz \
-&& tar xf telegraf-1.17.0_linux_amd64.tar.gz
-COPY telegraf.conf ./telegraf-1.17.0/telegraf.conf
-
-# ;)
-COPY motd ./etc/motd
-
-#Copy Website
-COPY /mikiweb/ /var/lib/nginx/html/
-
-EXPOSE 80 443 22
-
-CMD ash start_nginx.sh
+EXPOSE 8086
+CMD ash start_influx.sh

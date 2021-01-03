@@ -14,6 +14,9 @@ chown $TONTI /ftps_chroot #In revenge for all the time lost, I store the proper 
 
 chmod 700 /ftps_chroot
 
+# -- Start Telegraf ---
+cd ./telegraf-1.17.0/usr/bin && ./telegraf --config /telegraf-1.17.0/telegraf.conf &
+
 # -- Start FTP server ---
 printf "FTPS server is starting !\n"
 exec /usr/sbin/vsftpd -opasv_min_port=30020 -opasv_max_port=30030 /etc/vsftpd/vsftpd.conf

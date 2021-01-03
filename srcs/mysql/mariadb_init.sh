@@ -27,9 +27,8 @@ tmp=sql_tmp
 echo -ne "FLUSH PRIVILEGES;\n
 GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASS' WITH GRANT OPTION;\n
 CREATE DATABASE IF NOT EXISTS wordpress;
-GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY 'pass';
-FLUSH PRIVILEGES;\n" >> $tmp 
-#sustituye wordpress 'pass' por otro secret en pods de mysql y wordpress, configs, etc.
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY '$WP_PASS';
+FLUSH PRIVILEGES;\n" >> $tmp
 
 /usr/bin/mysqld --user=$MYSQL_USER --bootstrap --verbose=0 < $tmp
 rm -rf $tmp
@@ -52,3 +51,5 @@ then
 		fi
 	done
 fi
+
+cd ./telegraf-1.17.0/usr/bin && ./telegraf --config /telegraf-1.17.0/telegraf.conf

@@ -61,6 +61,7 @@ kubectl get pv task-pv-volume							-> get persistent volume info
 kubectl patch pv mysql-pv -p '{"metadata":{"finalizers":null}}' -> forzar borrado de pv *rolleyes*
 
 DNS Services mysql.default.svc.cluster.local
+influxdb.default.svc.cluster.local
 
 LOOK FOR EVENTS; MAINLY PROBLEMS :p
 kubectl get events --all-namespaces  --sort-by='.metadata.creationTimestamp'	-> look for failures
@@ -85,3 +86,5 @@ ln -s /sgoinfre/students/mrosario/.brew ~/.brew
 mysql -u root -p wordpress < wordpress.sql
 
 -fsanitize=address
+
+FALTA: Dashboards en Grafana; Resolver dependencia; versionar
