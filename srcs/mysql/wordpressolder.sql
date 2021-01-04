@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mysql.default.svc.cluster.local:3306
--- Tiempo de generación: 21-12-2020 a las 18:25:30
+-- Tiempo de generación: 23-12-2020 a las 19:32:02
 -- Versión del servidor: 10.4.15-MariaDB-log
 -- Versión de PHP: 7.3.25
 
@@ -117,8 +117,8 @@ CREATE TABLE `wp_options` (
 --
 
 INSERT INTO `wp_options` (`option_id`, `option_name`, `option_value`, `autoload`) VALUES
-(1, 'siteurl', 'http://192.168.99.202/wordpress', 'yes'),
-(2, 'home', 'http://192.168.99.202/wordpress', 'yes'),
+(1, 'siteurl', 'http://wordpress.default.svc.cluster.local:5050/wordpress', 'yes'),
+(2, 'home', 'http://wordpress.default.svc.cluster.local:5050/wordpress', 'yes'),
 (3, 'blogname', 'Mikilandia', 'yes'),
 (4, 'blogdescription', 'Tierra de los mikitines', 'yes'),
 (5, 'users_can_register', '0', 'yes'),

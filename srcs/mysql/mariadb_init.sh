@@ -1,6 +1,10 @@
 
 #!/bin/sh
 
+mv /tmp/telegraf.conf /telegraf-1.17.0/telegraf.conf
+mv /tmp/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
+mv /tmp/wordpress.sql /wordpress.sql
+
 #Con OpenRC
 
 #openrc
@@ -35,10 +39,11 @@ rm -rf $tmp
 /usr/bin/mysqld --user=$MYSQL_USER &
 
 #If the (persistent) wordpress database directory is empty...
-if [ ! "$(ls -A var/lib/mysql/wordpress/)" ]
+ls var/lib/mysql/wordpress/ | grep -v 'db.opt'
+if [ $? != 0 ]
 then
 	#Wait for mysql to be running...
-	while [ $TONTI == 1 ]
+	while [ $TONTI == 0 ]
 	do
 		sleep 5
 		ps aux | grep -v "grep" | grep "/usr/bin/mysqld"

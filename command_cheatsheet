@@ -58,7 +58,7 @@ kubectl delete po -n metallb-system --all				-> delete metallb
 kubectl create deployment nginx2 --image nginx -o yaml	-> create yaml
 kubectl apply -f pv-volume.yaml							-> create pv
 kubectl get pv task-pv-volume							-> get persistent volume info
-kubectl patch pv mysql-pv -p '{"metadata":{"finalizers":null}}' -> forzar borrado de pv *rolleyes*
+kubectl patch pvc mysql-pv-claim -p '{"metadata":{"finalizers":null}}' -> forzar borrado de pv *rolleyes*
 
 DNS Services mysql.default.svc.cluster.local
 influxdb.default.svc.cluster.local

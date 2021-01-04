@@ -1,8 +1,5 @@
-# --- Env variables
-# FTPS_USER <- Username of the user you want to create
-# FTPS_PASS <- The password of the user
-
 # --- FTPS setup ---
+mv /tmp/ftps.conf /etc/vsftpd/vsftpd.conf
 openssl req -x509 -nodes -subj '/CN=localhost' -days 365 -newkey rsa:1024 -keyout /etc/vsftpd/vsftpd.pem -out /etc/vsftpd/vsftpd.pem
 if [ ! -d "/ftps_chroot" ]
 then
@@ -15,6 +12,7 @@ chown $TONTI /ftps_chroot #In revenge for all the time lost, I store the proper 
 chmod 700 /ftps_chroot
 
 # -- Start Telegraf ---
+mv /tmp/telegraf.conf /telegraf-1.17.0/telegraf.conf
 cd ./telegraf-1.17.0/usr/bin && ./telegraf --config /telegraf-1.17.0/telegraf.conf &
 
 # -- Start FTP server ---
