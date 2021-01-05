@@ -87,4 +87,4 @@ mysql -u root -p wordpress < wordpress.sql
 
 -fsanitize=address
 
-FALTA: Dashboards en Grafana; Resolver dependencia; versionar
+FALTA: Arreglar caídas mysql :_( , sacar influxdb bd

@@ -36,6 +36,8 @@ FLUSH PRIVILEGES;\n" >> $tmp
 
 /usr/bin/mysqld --user=$MYSQL_USER --bootstrap --verbose=0 < $tmp
 rm -rf $tmp
+
+#Start mysqld for possible database insertion
 /usr/bin/mysqld --user=$MYSQL_USER &
 
 #If the (persistent) wordpress database directory is empty...
@@ -57,4 +59,10 @@ then
 	done
 fi
 
-cd ./telegraf-1.17.0/usr/bin && ./telegraf --config /telegraf-1.17.0/telegraf.conf
+#Shut mysql down to start it back up in foreground
+/usr/bin/mysqladmin -u $MYSQL_USER --password=$MYSQL_PASS shutdown
+
+#Start Telegraf and push to background
+cd ./telegraf-1.17.0/usr/bin && ./telegraf --config /telegraf-1.17.0/telegraf.conf &
+
+exec /usr/bin/mysqld --user=$MYSQL_USER

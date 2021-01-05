@@ -8,4 +8,4 @@ ssh-keygen -A
 /usr/sbin/sshd
 /etc/motd
 cd ./telegraf-1.17.0/usr/bin && ./telegraf --config /telegraf-1.17.0/telegraf.conf &
-nginx -g 'pid /tmp/nginx.pid;'
+exec nginx -g 'pid /tmp/nginx.pid;'
