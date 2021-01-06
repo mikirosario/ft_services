@@ -59,8 +59,10 @@ then
 	done
 fi
 
-#Shut mysql down to start it back up in foreground
-/usr/bin/mysqladmin -u $MYSQL_USER --password=$MYSQL_PASS shutdown
+#Shut mysql down in order to start it back up in foreground...
+#As you can see, at first I tried to do this the nice way, but MySQL refused to cooperate. :p
+#/usr/bin/mysqladmin -u $MYSQL_USER --password=$MYSQL_PASS shutdown
+pkill mysqld
 
 #Start Telegraf and push to background
 cd ./telegraf-1.17.0/usr/bin && ./telegraf --config /telegraf-1.17.0/telegraf.conf &

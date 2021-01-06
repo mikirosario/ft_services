@@ -42,7 +42,7 @@ docker run --name copy_test --volumes-from nginx -d -p 8080:80 -p 4443:443 nginx
 ######## KUBERNETES (KUBECTL) ########
 
 Apuntar mi docker a docker de minikube
-eval $(minikube -p minikube docker-env)					-> point my docker environment variable to minikube docker (shell magic) :p
+						-> point my docker environment variable to minikube docker (shell magic) :p
 kubectl exec -it nginx-6bfbfd6449-kphfz -- bin/ash		-> enter running container in cluster from kubectl
 kubectl apply -f ../nginx.yaml							-> aplicar nueva configuración a deployment
 kubectl get pod											-> ver pods
@@ -88,3 +88,10 @@ mysql -u root -p wordpress < wordpress.sql
 -fsanitize=address
 
 FALTA: Arreglar caídas mysql :_( , sacar influxdb bd
+
+
+FTP with CURL
+curl --ftp-ssl --insecure --user user:pass ftp://192.168.99.201:21
+
+SSH
+ssh user@192.168.99.200
