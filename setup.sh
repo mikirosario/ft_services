@@ -194,10 +194,10 @@ function build_images()
 	docker build -t phpmyadmin:latest ./srcs/phpmyadmin/
 	echo "Building wordpress container..."
 	docker build -t wordpress:latest ./srcs/wordpress/
-	#echo "Building influxdb container..."
-	#docker build -t influxdb:latest ./srcs/influxdb/
-	#echo "Building grafana container..."
-	#docker build -t grafana:latest ./srcs/grafana/
+	echo "Building influxdb container..."
+	docker build -t influxdb:latest ./srcs/influxdb/
+	echo "Building grafana container..."
+	docker build -t grafana:latest ./srcs/grafana/
 }
 
 function launch_services()
@@ -211,8 +211,8 @@ function launch_services()
 	kubectl apply -f ./srcs/phpmyadmin.yaml
 	kubectl apply -f ./srcs/wordpress.yaml
 	kubectl apply -f ./srcs/nginx.yaml
-	#kubectl apply -f ./srcs/influxdb.yaml
-	#kubectl apply -f ./srcs/grafana.yaml
+	kubectl apply -f ./srcs/influxdb.yaml
+	kubectl apply -f ./srcs/grafana.yaml
 }
 
 hostname | grep 42madrid &> /dev/null
