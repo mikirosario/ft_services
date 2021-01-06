@@ -6,7 +6,7 @@
 #    By: mrosario <mrosario@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/29 00:15:19 by miki              #+#    #+#              #
-#    Updated: 2021/01/04 20:59:30 by mrosario         ###   ########.fr        #
+#    Updated: 2021/01/06 21:04:36 by mrosario         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,9 @@ RUN echo "http://dl-2.alpinelinux.org/alpine/edge/community" >> /etc/apk/reposit
 
 # Copy InfluxDB initiation script
 COPY start_influx.sh telegraf.conf /
+
+#Copy starter database
+#COPY backup /influxdb_backup
 
 #COPY start_influx.sh ./start_influx.sh
 #COPY telegraf.conf ./telegraf.conf

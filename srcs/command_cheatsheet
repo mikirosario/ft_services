@@ -42,7 +42,7 @@ docker run --name copy_test --volumes-from nginx -d -p 8080:80 -p 4443:443 nginx
 ######## KUBERNETES (KUBECTL) ########
 
 Apuntar mi docker a docker de minikube
-						-> point my docker environment variable to minikube docker (shell magic) :p
+eval $(minikube docker-env)								-> point my docker environment variable to minikube docker (shell magic) :p
 kubectl exec -it nginx-6bfbfd6449-kphfz -- bin/ash		-> enter running container in cluster from kubectl
 kubectl apply -f ../nginx.yaml							-> aplicar nueva configuración a deployment
 kubectl get pod											-> ver pods
