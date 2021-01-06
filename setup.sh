@@ -232,3 +232,4 @@ setup_metallb
 build_images
 launch_services
 yes | docker system prune
+minikube dashboard
