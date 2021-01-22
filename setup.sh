@@ -232,5 +232,7 @@ setup_metallb
 build_images
 launch_services
 yes | docker system prune
+minikube addons enable dashboard
+kubectl proxy &
 sleep 5
 minikube dashboard
